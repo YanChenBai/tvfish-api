@@ -1,0 +1,6 @@
+-- CreateTable
+CREATE TABLE "Rooms" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "roomId" TEXT NOT NULL,
+    "name" TEXT NOT NULL
+);
