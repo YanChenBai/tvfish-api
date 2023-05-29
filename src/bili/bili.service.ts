@@ -54,7 +54,7 @@ interface Format {
 
 interface Stream {
   protocol_name: string;
-  format: Format;
+  format: Format[];
 }
 
 interface LiveOrigin {
@@ -64,7 +64,7 @@ interface LiveOrigin {
     playurl: {
       cid: number;
       g_qn_desc: QnDesc[];
-      stream: Stream;
+      stream: Stream[];
     };
   };
 }
@@ -145,12 +145,17 @@ export class BiliService {
         throw new HttpException('还没开播捏!', 403);
       }
 
-      const streamIndex = 0;
-      const formatIndex = 0;
       const codecIndex = 0;
       const { playurl_info } = res.data.data;
-      const format: Format =
-        playurl_info.playurl.stream[streamIndex].format[formatIndex];
+
+      // http_hls, http_stream
+      const stream = playurl_info.playurl.stream.find(
+        (item) => item.protocol_name === 'http_hls',
+      );
+
+      const format: Format = stream.format.find(
+        (item) => item.format_name == 'ts',
+      );
       const codec: Codec = format.codec[codecIndex];
       const baseUrl = codec.base_url;
       const host = codec.url_info[line].host;

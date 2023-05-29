@@ -51,6 +51,8 @@ export class DouyuService {
         url: `https://www.douyu.com/swf_api/h5room/${realRoomId}`,
       });
       data.data.data.room_id = Number(realRoomId);
+      console.log(data.data);
+
       if (data.data.error === 0) {
         const {
           nickname,
