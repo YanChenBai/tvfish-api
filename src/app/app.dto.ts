@@ -21,5 +21,5 @@ export class GetOrigin {
 
   @IsOptional()
   @IsNotEmpty()
-  line = '';
+  line = ' ';
 }

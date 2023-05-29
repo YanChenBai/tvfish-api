@@ -161,9 +161,14 @@ export class DouyuService {
         qn: item.rate,
       }));
 
+      const lines = data['cdnsWithName'].map((item) => ({
+        name: item.name,
+        line: item.cdn,
+      }));
+
       const info = {
         quality,
-        lines: data['cdnsWithName'],
+        lines,
         url: liveUrl,
         line: data['rtmp_cdn'],
         qn: data['rate'],
@@ -171,7 +176,7 @@ export class DouyuService {
       };
       return info;
     } else if (res.data.error === -5) {
-      throw new HttpException('房间未开播！', -5);
+      throw new HttpException('房间未开播！', 403);
     } else {
       throw new HttpException('烂完了!', HttpStatus.NOT_FOUND);
     }

@@ -58,6 +58,7 @@ interface Stream {
 }
 
 interface LiveOrigin {
+  live_status: number;
   playurl_info: {
     conf_json: string;
     playurl: {
@@ -136,9 +137,14 @@ export class BiliService {
         qn,
       },
     });
+
     if (res.status !== 200)
       throw new HttpException('获取失败!', HttpStatus.INTERNAL_SERVER_ERROR);
     if (res.data.code === 0) {
+      if (res.data.data.live_status !== 1) {
+        throw new HttpException('还没开播捏!', 403);
+      }
+
       const streamIndex = 0;
       const formatIndex = 0;
       const codecIndex = 0;

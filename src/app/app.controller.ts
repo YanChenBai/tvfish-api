@@ -5,7 +5,9 @@ import { GetOrigin, RoomInfo } from './app.dto';
 import { BiliService } from '../bili/bili.service';
 import { DouyuService } from '../douyu/douyu.service';
 import { Success } from 'src/utils/response';
+import { NestLogger } from 'nest-logs';
 
+@NestLogger()
 @Controller()
 export class AppController {
   constructor(
