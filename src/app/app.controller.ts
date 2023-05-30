@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { GetOrigin, RoomInfo } from './app.dto';
+import { BiliRoomInfo, DouyuRoomInfo, RoomInfo } from './app.dto';
 import { BiliService } from '../bili/bili.service';
 import { DouyuService } from '../douyu/douyu.service';
 import { Success } from 'src/utils/response';
@@ -32,22 +32,22 @@ export class AppController {
     return Success(await this.appService.getRoom());
   }
 
-  @Get('/live')
-  async live(@Query() pamas: GetOrigin) {
-    switch (pamas.type) {
-      case 'douyu':
-        return Success(
-          await this.douyuService.getOrigin(pamas.roomId, pamas.qn, pamas.line),
-        );
-      case 'bili':
-        return Success(
-          await this.biliService.getOrigin(
-            pamas.roomId,
-            pamas.qn,
-            Number(pamas.line),
-          ),
-        );
-    }
+  @Get('/live/douyu')
+  async douyuLive(@Query() pamas: DouyuRoomInfo) {
+    return Success(
+      await this.douyuService.getOrigin(pamas.roomId, pamas.qn, pamas.line),
+    );
+  }
+
+  @Get('/live/bili')
+  async biliLive(@Query() pamas: BiliRoomInfo) {
+    return Success(
+      await this.biliService.getOrigin(
+        pamas.roomId,
+        pamas.qn,
+        Number(pamas.line),
+      ),
+    );
   }
 
   @Get('/room/info')

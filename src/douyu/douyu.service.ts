@@ -51,7 +51,6 @@ export class DouyuService {
         url: `https://www.douyu.com/swf_api/h5room/${realRoomId}`,
       });
       data.data.data.room_id = Number(realRoomId);
-      console.log(data.data);
 
       if (data.data.error === 0) {
         const {
@@ -131,9 +130,11 @@ export class DouyuService {
     :return: JSON格式
     `;
     let res = await axios.get('https://www.douyu.com/' + roomId);
+
     const result = res.data.match(
       /(vdwdae325w_64we[\s\S]*function ub98484234[\s\S]*?)function/,
     );
+
     const func_ub9 = result[1].replace(/eval.*?;}/g, 'strc;}');
 
     let fun: any = this.executeStrJs(func_ub9, ['ub98484234']);
@@ -153,6 +154,8 @@ export class DouyuService {
     let params = fun.sign(roomId, this.did, this.t10);
     params += `&cdn=${line}&rate=${qn}`;
     const url = `https://www.douyu.com/lapi/live/getH5Play/${roomId}?${params}`;
+    console.log(url);
+
     res = await axios({ method: 'POST', url, headers: Config.headers });
 
     if (res.data.error === 0) {

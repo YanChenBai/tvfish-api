@@ -18,8 +18,16 @@ export class GetOrigin {
   @IsOptional()
   @IsNotEmpty()
   qn = 0;
+}
 
+export class DouyuRoomInfo extends GetOrigin {
   @IsOptional()
   @IsNotEmpty()
-  line = ' ';
+  line = 'ws-h5';
+}
+
+export class BiliRoomInfo extends GetOrigin {
+  @IsOptional()
+  @IsNotEmpty()
+  line = 0;
 }
